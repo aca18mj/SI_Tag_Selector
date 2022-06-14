@@ -1,20 +1,55 @@
 const NUMBER_OF_RESULTS_DISPLAYED = 100;
+const GROUPING = true;
 
 let listHolder = document.getElementById("listHolder");
 let input = document.getElementById("searchInput");
 let tags;
+let groupedTags;
+let tagsIndex;
 
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { greeting: "hello" }, function (response) {
-        console.log(response);
         tags = response;
-        let list = buildList(tags.slice(0, NUMBER_OF_RESULTS_DISPLAYED));
+
+        groupTags(response);
+
+        let list = buildList(groupedTags.slice(0, NUMBER_OF_RESULTS_DISPLAYED));
         listHolder.appendChild(list);
-        insertSearchSummary(response.length);
+        insertSearchSummary(groupedTags.length);
     });
 });
 
 input.addEventListener("keyup", onTextTyped);
+
+function groupTags(tags) {
+    let re = /(DSV_SRQ.*)_(\d\.\d)_rt/;
+
+    let splitTags = tags.map((str) => {
+        let match = str.match(re);
+        try {
+            return [match[1], parseFloat(match[2])];
+        }
+        catch (e) {
+
+        }
+    });
+
+    tagsIndex = {};
+    groupedTags = [];
+
+    splitTags.forEach((tag) => {
+        if (tag != undefined)
+            if (tag[0] in tagsIndex) {
+                let index = tagsIndex[tag[0]];
+                groupedTags[index].push(tag[1]);
+            } else {
+                groupedTags.push([tag[0], tag[1]]);
+                tagsIndex[tag[0]] = groupedTags.length - 1;
+            }
+    })
+
+    return groupedTags;
+}
 
 function buildList(values) {
     var div = document.createElement('div');
@@ -22,51 +57,85 @@ function buildList(values) {
     div.id = "listParent";
 
     values.forEach((value) => {
+        //List button
+        var wrapper = document.createElement('div');
+        wrapper.classList.add("dropdown");
+
         var button = document.createElement('button');
         button.type = "button";
         button.classList.add("list-group-item");
         button.classList.add("list-group-item-action");
+        button.setAttribute("data-bs-toggle", "dropdown");
 
-        button.textContent = value;
-        div.appendChild(button);
+        button.textContent = value[0];
+
+        var list = document.createElement("ul");
+        list.id = "versionDropDown";
+        list.classList.add("dropdown-menu");
+
+        value.slice(1).forEach((version) => {
+            let li = document.createElement("li");
+            list.appendChild(li);
+
+            let a = document.createElement("a");
+            a.classList.add("dropdown-item");
+
+            let verString = (Number.isInteger(version)) ? version + ".0" : version;
+            a.innerText = verString;
+            
+            let rtFullName = value[0] +
+                                "_" +
+                                verString +
+                                "_rt";
+
+            a.setAttribute("data-rtName", rtFullName);
+            a.addEventListener('click', selectTag);
+
+            li.appendChild(a);
+        })
+        
+
+        wrapper.appendChild(button);
+        wrapper.appendChild(list);
+        div.appendChild(wrapper);
     })
 
     return div;
 }
 
 function insertSearchSummary(numberOfResults) {
-    let searchSUmmary = document.getElementById("searchSummary");
+    let searchSummary = document.getElementById("searchSummary");
+    searchSummary.innerHTML = "";
 
     var strong = document.createElement('strong');
     strong.textContent = numberOfResults;
 
-    searchSUmmary.appendChild(strong);
-    searchSUmmary.innerHTML += " tags found."
+    searchSummary.appendChild(strong);
+    searchSummary.innerHTML += " tags found."
 
     if (numberOfResults > NUMBER_OF_RESULTS_DISPLAYED) {
-        searchSUmmary.innerHTML += " Displaying first " + NUMBER_OF_RESULTS_DISPLAYED + ".";
+        searchSummary.innerHTML += " Displaying first " + NUMBER_OF_RESULTS_DISPLAYED + ".";
     }
 }
 
 function onTextTyped(e) {
-    performSearch(input.value);
+    if (GROUPING) {
+        listHolder.innerHTML = "";
+        var results = groupedTags.filter((arr) => {
+            return arr[0]
+                    .toLowerCase()
+                    .includes(input.value.toLowerCase());
+        });
+        var list = buildList(results);
+
+        listHolder.appendChild(list);
+
+        insertSearchSummary(results.length);
+    } else {
+        performSearch(input.value);
+    }
 }
 
-async function performSearch(query) {
-    console.log("Searching for " + query);
-
-    let results = tags.filter((str) => {
-        return str.toLowerCase().includes(query.toLowerCase());
-    });
-
-    let list = buildList(results.slice(0, NUMBER_OF_RESULTS_DISPLAYED));
-
-    //clear list
-    listHolder.innerHTML = '';
-    searchSummary.innerHTML = '';
-
-    listHolder.appendChild(list);
-    insertSearchSummary(results.length);
-    console.log("Search performed");
-
+function selectTag(e) {
+    let rtName = e.target.getAttribute("data-rtName");
 }

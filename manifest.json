@@ -10,6 +10,6 @@
   "content_scripts": [
     {
     "matches": ["file:///C:/Users/Micha%C5%82/OneDrive/Pulpit/IT/SIExtension/index.html"],
-    "js" : ["contentScript.js"]
+    "js" : ["contentScript.js", "bootstrap.bundle.min.js"]
   }]
 }

@@ -54,3 +54,7 @@
 	background-color: #adb5bd;
     border-radius: 8px;
 }
+
+#versionDropDown {
+    transform: translate(350px, -5px) !important;
+}
