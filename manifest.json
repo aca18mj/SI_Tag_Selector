@@ -1,0 +1,15 @@
+{
+  "name": "First extension",
+  "description": "Testing",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+      "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+    "matches": ["file:///C:/Users/Micha%C5%82/OneDrive/Pulpit/IT/SIExtension/index.html"],
+    "js" : ["contentScript.js"]
+  }]
+}
