@@ -1,14 +1,19 @@
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
-        console.log(sender.tab ?
-            "from a content script:" + sender.tab.url :
-            "from the extension");
+
+        if (request.message == "Request tags") {
             sendResponse(getValues());
+            return;
+        }
+
+        if (request.message == "Select tag") {
+            document.getElementById("TagName_id").value = request.tagName;
+            return;
+        }
     }
 );
 
-function getValues()
-{
+function getValues() {
     let selectElem = document.getElementById("TagName_id");
     var arr = [].slice.call(selectElem.children);
     arr = arr.map((e) => {
@@ -16,7 +21,6 @@ function getValues()
     });
 
     return arr.filter((str) => {
-        //return str.includes('PUIG');
         return str.startsWith('DSV_SRQ');
     });
 }

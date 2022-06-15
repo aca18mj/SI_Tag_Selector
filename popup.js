@@ -1,16 +1,13 @@
-const NUMBER_OF_RESULTS_DISPLAYED = 100;
+const NUMBER_OF_RESULTS_DISPLAYED = 50;
 const GROUPING = true;
 
 let listHolder = document.getElementById("listHolder");
 let input = document.getElementById("searchInput");
 let tags;
 let groupedTags;
-let tagsIndex;
 
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: "hello" }, function (response) {
-        tags = response;
-
+    chrome.tabs.sendMessage(tabs[0].id, { message: "Request tags" }, function (response) {
         groupTags(response);
 
         let list = buildList(groupedTags.slice(0, NUMBER_OF_RESULTS_DISPLAYED));
@@ -34,7 +31,7 @@ function groupTags(tags) {
         }
     });
 
-    tagsIndex = {};
+    let tagsIndex = {};
     groupedTags = [];
 
     splitTags.forEach((tag) => {
@@ -52,6 +49,7 @@ function groupTags(tags) {
 }
 
 function buildList(values) {
+    console.log(values.length);
     var div = document.createElement('div');
     div.classList.add('list-group');
     div.id = "listParent";
@@ -68,7 +66,8 @@ function buildList(values) {
         button.setAttribute("data-bs-toggle", "dropdown");
 
         button.textContent = value[0];
-
+        
+        //Dropdown
         var list = document.createElement("ul");
         list.id = "versionDropDown";
         list.classList.add("dropdown-menu");
@@ -82,18 +81,18 @@ function buildList(values) {
 
             let verString = (Number.isInteger(version)) ? version + ".0" : version;
             a.innerText = verString;
-            
+
             let rtFullName = value[0] +
-                                "_" +
-                                verString +
-                                "_rt";
+                "_" +
+                verString +
+                "_rt";
 
             a.setAttribute("data-rtName", rtFullName);
             a.addEventListener('click', selectTag);
 
             li.appendChild(a);
         })
-        
+
 
         wrapper.appendChild(button);
         wrapper.appendChild(list);
@@ -123,10 +122,10 @@ function onTextTyped(e) {
         listHolder.innerHTML = "";
         var results = groupedTags.filter((arr) => {
             return arr[0]
-                    .toLowerCase()
-                    .includes(input.value.toLowerCase());
+                .toLowerCase()
+                .includes(input.value.toLowerCase());
         });
-        var list = buildList(results);
+        var list = buildList(results.slice(0, NUMBER_OF_RESULTS_DISPLAYED));
 
         listHolder.appendChild(list);
 
@@ -138,4 +137,9 @@ function onTextTyped(e) {
 
 function selectTag(e) {
     let rtName = e.target.getAttribute("data-rtName");
+    console.log(rtName);
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id,
+            { message: "Select tag", tagName: rtName });
+    });
 }
