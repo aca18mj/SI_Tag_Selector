@@ -1,3 +1,5 @@
+let grouping;
+
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
 
@@ -16,12 +18,9 @@ chrome.runtime.onMessage.addListener(
 function getValues() {
     let selectElem = document.getElementById("TagName_id");
     var arr = [].slice.call(selectElem.children);
-    arr = arr.map((e) => {
-        return e.text;
-    });
-
-    return arr.filter((str) => {
-        return str.startsWith('DSV_SRQ');
+    
+    return arr.map((e) => {
+        return e.innerHTML;
     });
 }
 

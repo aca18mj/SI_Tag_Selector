@@ -4,6 +4,12 @@ body
     padding: 10px !important;
 }
 
+#header
+{
+    padding-right: 20px;
+    margin-bottom: 10px;
+}
+
 #main
 {
     min-width: 600px;
@@ -24,7 +30,7 @@ body
 
 #listHolder
 {
-    margin-top: 10px;
+    margin-top: 15px;
     font-size: 0.9em;
     max-height: 400px;
     overflow: hidden;
@@ -36,6 +42,29 @@ body
     margin-right: 10px;
 }
 
+#listParent > .dropdown:first-of-type
+{
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+#listParent > .dropdown:first-of-type > button {
+    border-top-width: 1px;
+}
+
+#listParent > .dropdown:last-of-type
+{
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.dropdown > button
+{
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    border-top-width: 0px;
+}
+
 #searchSummary
 {
     margin-left: 5px;
@@ -45,20 +74,20 @@ body
 
 ::-webkit-scrollbar-track
 {
-	background-color: #F5F5F5;
+	background-color: rgb(242, 242, 247);
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar
 {
-	width: 10px;
+	width: 8px;
 	background-color: #F5F5F5;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb
 {
-	background-color: #adb5bd;
+	background-color: rgb(99, 99, 102);
     border-radius: 8px;
 }
 

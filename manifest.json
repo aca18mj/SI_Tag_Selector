@@ -3,13 +3,13 @@
   "description": "Testing",
   "version": "1.0",
   "manifest_version": 3,
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["storage", "activeTab", "scripting"],
   "action": {
       "default_popup": "popup.html"
   },
   "content_scripts": [
     {
-    "matches": ["file:///C:/Users/Micha%C5%82/OneDrive/Pulpit/IT/SIExtension/index.html"],
+    "matches": ["<all_urls>"],
     "js" : ["contentScript.js", "bootstrap.bundle.min.js"]
   }]
 }
