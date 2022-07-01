@@ -1,15 +1,32 @@
 {
-  "name": "First extension",
-  "description": "Testing",
+  "name": "SI Tag Selector",
+  "description": "Provides ability to search and group tags based on name and version",
   "version": "1.0",
+  "author": "Michał Jarmocik",
   "manifest_version": 3,
   "permissions": ["storage", "activeTab", "scripting"],
   "action": {
-      "default_popup": "popup.html"
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "/icons/16.png",
+        "32": "/icons/32.png",
+        "64": "/icons/64.png",
+        "128": "/icons/128.png"
+      }
+  },
+  "background": {
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
     "matches": ["<all_urls>"],
-    "js" : ["contentScript.js", "bootstrap.bundle.min.js"]
-  }]
+    "js" : ["contentScript.js", "bootstrap.bundle.min.js"],
+    "all_frames": true
+  }],
+  "icons": {
+    "16": "/icons/16.png",
+    "32": "/icons/32.png",
+    "64": "/icons/64.png",
+    "128": "/icons/128.png"
+  }
 }

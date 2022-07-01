@@ -1,26 +1,43 @@
-
 body
 {
-    padding: 10px !important;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
 }
 
 #header
 {
     padding-right: 20px;
     margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+#header .h6
+{
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+
+#header .form-check
+{
+    margin-right: 5px;
 }
 
 #main
 {
     min-width: 600px;
-    overflow: hidden;
-    padding: 10px !important;
 }
 
 #searchForm
 {
     max-width: 768px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+#TagsNotFound
+{
+    display: none;
 }
 
 #inputHolder
@@ -28,18 +45,57 @@ body
     padding-right: 20px;
 }
 
+#ListsWrapper
+{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 480px;
+}
+
+#LastSearchesContainer 
+{
+    display: none;
+    margin-bottom: 5px;
+} 
+#LastSearchesContainer small{
+    margin-left: 5px;
+}
+
+#LastSearchesContainer button
+{
+    height: 38px;
+    font-size: 0.9em;
+}
+
+#LastSearchesList
+{
+    max-width: 560px;
+}
+
 #listHolder
 {
-    margin-top: 15px;
+    margin-top: 5px;
     font-size: 0.9em;
-    max-height: 400px;
+    height: 100%;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #listParent
 {
     margin-right: 10px;
+    max-width: 560px;
+}
+
+#listParent button
+{
+    height: 38px;
+}
+
+#listParent div:nth-child(even) button
+{
+    background-color: rgb(242, 242, 247);
 }
 
 #listParent > .dropdown:first-of-type
@@ -91,10 +147,9 @@ body
     border-radius: 8px;
 }
 
-
-#versionDropDown {
+.versionDropDown {
     text-align: center;
-    transform: translate(350px, -5px) !important;
+    transform: translate(350px, 0px) !important;
     min-width: 6rem;
     max-height: 250px;
     overflow: hidden;

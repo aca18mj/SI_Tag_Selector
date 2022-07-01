@@ -1,27 +1,28 @@
-let grouping;
+const SELECT_ID = "TagName_id";
 
-chrome.runtime.onMessage.addListener(
-    function (request, sender, sendResponse) {
-
-        if (request.message == "Request tags") {
-            sendResponse(getValues());
-            return;
-        }
-
-        if (request.message == "Select tag") {
-            document.getElementById("TagName_id").value = request.tagName;
-            return;
-        }
-    }
-);
-
-function getValues() {
-    let selectElem = document.getElementById("TagName_id");
-    var arr = [].slice.call(selectElem.children);
-    
-    return arr.map((e) => {
-        return e.innerHTML;
-    });
+function getValues(dropDown) {
+    var arr = [].slice.call(dropDown.children);
+    return arr.map((e) => { return e.innerHTML; });
 }
 
+function initialise() {
+    if (document.getElementById(SELECT_ID) == null) return;
 
+    chrome.runtime.onMessage.addListener(
+        function (request, sender, sendResponse) {
+            console.log("Message: " + request.message);
+            let dropDown = document.getElementById(SELECT_ID);
+
+            if (request.message == "Request tags") {
+                let results = getValues(dropDown);
+                sendResponse(results);
+            }
+            else if (request.message == "Select tag") {
+                dropDown.value = request.tagName;
+            }
+        }
+    );
+}
+
+///////////////////
+initialise();

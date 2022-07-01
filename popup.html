@@ -11,8 +11,8 @@
 
     <div id="main" class="container">
         <div id="header" class="d-flex justify-content-between align-items-center">
-            <h1 class="fw-light">Resource Tag selector</h1>
-            <div class="form-check form-switch">
+            <div class="h6">Resource Tag selector</div>
+            <div id="switchContainer" class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="groupingSwitch" checked>
                 <label class="form-check-label" for="groupingSwitch">Grouping</label>
             </div>
@@ -22,16 +22,23 @@
             <div id="inputHolder" class="input-group">
                 <input id="searchInput" placeholder="Search" type="text" class="form-control">
             </div>
-
-
-
-
         </form>
-        <div class="text-center">
-            <small id="searchSummary" class="text-muted"></small>
-        </div>
-        <div id="listHolder">
 
+        <div id="TagsNotFound" class="text-center">
+            <p class="text-muted">No tags on this page</p>
+        </div>
+
+        <div id="ListsWrapper">
+
+            <div id="LastSearchesContainer">
+                <small class="text-muted">Recently used</small>
+                <div id="LastSearchesList" class="list-group"></div>
+            </div>
+
+            <div class="text-center">
+                <small id="searchSummary" class="text-muted"></small>
+            </div>
+            <div id="listHolder"></div>
         </div>
 
         <script src="popup.js"></script>
