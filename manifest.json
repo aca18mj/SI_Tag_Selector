@@ -1,10 +1,10 @@
 {
-  "name": "SI Tag Selector",
+  "name": "DSV SI Tag Selector",
   "description": "Provides ability to search and group tags based on name and version",
-  "version": "1.0",
+  "version": "0.1",
   "author": "Michał Jarmocik",
   "manifest_version": 3,
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["storage", "activeTab"],
   "action": {
       "default_popup": "popup.html",
       "default_icon": {

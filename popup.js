@@ -181,7 +181,7 @@ function selectTag(e) {
 
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id,
-            { message: "Select tag", tagName: rtName });
+            { message: "select-tag", tagName: rtName });
     });
 
     //save last searches
@@ -213,7 +213,7 @@ async function getLastSearches() {
 async function getTags() {
     try {
         let tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-        let allTags = await chrome.tabs.sendMessage(tabs[0].id, { message: "Request tags" });
+        let allTags = await chrome.tabs.sendMessage(tabs[0].id, { message: "request-tags" });
         return {
             groupedTags: groupTags(allTags),
             tags: allTags

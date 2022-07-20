@@ -13,15 +13,17 @@ function initialise() {
             console.log("Message: " + request.message);
             let dropDown = document.getElementById(SELECT_ID);
 
-            if (request.message == "Request tags") {
+            if (request.message == "request-tags") {
                 let results = getValues(dropDown);
                 sendResponse(results);
             }
-            else if (request.message == "Select tag") {
+            else if (request.message == "select-tag") {
                 dropDown.value = request.tagName;
             }
         }
     );
+
+    chrome.runtime.sendMessage('extension-ready');
 }
 
 ///////////////////
