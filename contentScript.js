@@ -6,12 +6,15 @@ function getValues(dropDown) {
 }
 
 function initialise() {
-    if (document.getElementById(SELECT_ID) == null) return;
+    const dropDown = document.getElementById(SELECT_ID);
+    if (dropDown == null) {
+        chrome.runtime.sendMessage('tags-not-found');
+        return;
+    };
 
     chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
             console.log("Message: " + request.message);
-            let dropDown = document.getElementById(SELECT_ID);
 
             if (request.message == "request-tags") {
                 let results = getValues(dropDown);

@@ -9,7 +9,7 @@ var lastSearches = [];
 var lastSearchesContainer;
 var isLastSearchDisplayed = true;
 
-//TODO: make this nicer
+//HTML builder
 function groupTags(tags) {
     let re = /(^\s?DSV_SRQ.*)_(\d+)\.(\d+)_rt$/;
 
@@ -63,6 +63,14 @@ function buildGroupedList(values) {
         let list = document.createElement("ul");
         list.classList.add("versionDropDown");
         list.classList.add("dropdown-menu");
+
+        //Header
+        let liHead = document.createElement("li");
+        let headH6 = document.createElement("h6");
+        headH6.classList.add("dropdown-header");
+        headH6.innerText = "Version";
+        liHead.appendChild(headH6);
+        list.appendChild(liHead);
 
         //Sort versions
         value[1].sort(function (a, b) {
@@ -143,7 +151,7 @@ function insertSearchSummary(numberOfResults) {
 function onTextTyped() {
     let list;
     let results;
-    let query = input.value.toLowerCase();
+    let query = input.value.toLowerCase().trim();
 
 
     if (isLastSearchDisplayed && query != "" && lastSearches.length > 0) {

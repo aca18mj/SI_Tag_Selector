@@ -32,7 +32,12 @@ body
 #searchForm
 {
     max-width: 768px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+}
+
+#recent-icon {
+    margin-left: 10px;
+    margin-bottom: 5px;
 }
 
 #TagsNotFound
@@ -56,7 +61,7 @@ body
 #LastSearchesContainer 
 {
     display: none;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 } 
 #LastSearchesContainer small{
     margin-left: 5px;
@@ -75,7 +80,7 @@ body
 
 #listHolder
 {
-    margin-top: 5px;
+    margin-top: 10px;
     font-size: 0.9em;
     height: 100%;
     overflow: hidden;
@@ -149,9 +154,10 @@ body
 
 .versionDropDown {
     text-align: center;
-    transform: translate(350px, 0px) !important;
-    min-width: 6rem;
+    transform: translate(300px, 10px) !important;
+    max-width: 6rem;
     max-height: 250px;
     overflow: hidden;
     overflow-y: scroll;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
